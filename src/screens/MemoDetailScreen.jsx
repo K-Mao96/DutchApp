@@ -1,8 +1,10 @@
-import React from "react";
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  View, ScrollView, Text, StyleSheet,
+} from 'react-native';
 
-import AppBar from "../components/AppBar";
-import CircleButton from "../components/CircleButton";
+import AppBar from '../components/AppBar';
+import CircleButton from '../components/CircleButton';
 
 export default function MemoDetailScreen() {
   return (
@@ -22,11 +24,10 @@ export default function MemoDetailScreen() {
         </Text>
       </ScrollView>
 
-      <CircleButton style = {{ top: 160, bottom: 'auto' }}>+</CircleButton>
+      <CircleButton style={{ top: 160, bottom: 'auto' }} name="edit-2" />
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

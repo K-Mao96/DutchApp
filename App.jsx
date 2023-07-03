@@ -10,13 +10,18 @@ import MemoCreateScreen from './src/screens/MemoCreateScreen';
 import LogInScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 
+// 割り勘アプリ
+import HomeScreen from './src/screens/HomeScreen';
+import ReimbursementListScreen from './src/screens/ReimbursementListScreen';
+import ReimbursementCreateScreen from './src/screens/ReimbursementCreateScreen';
+
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignUp"
+        initialRouteName="ReimbursementCreate"
         screenOptions={{
           headerStyle: { backgroundColor: '#467fd3' },
           headerTitleStyle: { color: '#fff' },
@@ -46,6 +51,11 @@ export default function App() {
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
           }}
         />
+
+        {/* 割り勘アプリ */}
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ReimbursementList" component={ReimbursementListScreen} />
+        <Stack.Screen name="ReimbursementCreate" component={ReimbursementCreateScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -37,7 +37,7 @@ export default function HomeScreen(proprs) {
       {/* 追加ボタン */}
       <CircleButton
         name="plus"
-        onPress={() => navigation.navigate('MemoCreate')}
+        onPress={() => navigation.navigate('ReimbursementCreate')}
       />
     </View>
   );

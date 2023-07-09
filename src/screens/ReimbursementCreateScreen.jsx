@@ -7,158 +7,81 @@ import Dialog from "react-native-dialog";
 
 // import Button from "../components/Button";
 
-export default function ReimbursementCreateScreen(props) {
-  const { navigation } = props;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [dialogVisible, setDialogVisible] = useState(false);
+export default function ReimbursementCreateScreen({ visible, onClose }) {
   const [selectedPerson, setSelectedPerson] = useState('');
   const [subject, setSubject] = useState('');
   const [amount, setAmount] = useState('');
-
-  const showDialog = () => {
-    setDialogVisible(true);
-  };
 
   const handleOK = () => {
     // OKボタンが押されたときの処理
     console.log('Selected Person:', selectedPerson);
     console.log('Subject:', subject);
     console.log('Amount:', amount);
-    setDialogVisible(false);
+    onClose();
   };
 
   const handleCancel = () => {
     // キャンセルボタンが押されたときの処理
-    setDialogVisible(false);
+    onClose();
   };
 
-  useEffect(() => {
-    // ページが読み込まれた後に実行したい関数をここに記述
-    showDialog();
-    // 他の処理を実行したい場合は、ここに記述
-  }, []);
-
   return (
-    <View style={styles.container}>
+    <Dialog.Container
+      visible={visible}
+      contentStyle={styles.inner}
+    >
+      <Dialog.Title style={styles.title}>
+        支払ったものを
+        {'\n'}
+        入力してください
+      </Dialog.Title>
 
-      {/* <View style={styles.inner}>
-        <Text style={styles.title}>
-          支払ったものを
-          {'\n'}
-          入力してください
-        </Text>
-
-        <View>
-          <Text style={styles.label}>立て替え者</Text>
-          <View style={styles.inputDoubleContainer}>
-            <TextInput
-              style={[styles.inputDouble, styles.inputDoubleTop]}
-              value={email}
-              onChangeText={(text) => { setEmail(text); }}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              textContentType="emailAddress"
-            />
-            <TextInput
-              style={styles.inputDouble}
-              value={email}
-              onChangeText={(text) => { setEmail(text); }}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              textContentType="emailAddress"
-            />
-          </View>
+      <Text style={styles.label}>立て替え者</Text>
+      <View style={styles.inputDoubleContainer}>
+        <View style={styles.inputDoubleBorder}>
+          <TouchableOpacity style={styles.inputDoubleItem}>
+            <Text style={styles.inputDoubleText}>川合真央</Text>
+          </TouchableOpacity>
         </View>
-
-        <View>
-          <Text style={styles.label}>件名</Text>
-          <TextInput
-            style={styles.input}
-          />
-        </View>
-
-        <View>
-          <Text style={styles.label}>金額</Text>
-          <TextInput
-            style={styles.input}
-          />
-        </View>
-
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Text style={styles.buttonLabel}>割り勘</Text>
+        <TouchableOpacity style={styles.inputDoubleItem}>
+          <Text style={styles.inputDoubleText}>河原悠真</Text>
         </TouchableOpacity>
+        {/* <Dialog.Input
+          wrapperStyle={styles.input}
+          value={selectedPerson}
+          onChangeText={(text) => setSelectedPerson(text)}
+        /> */}
+      </View>
+      <Text style={styles.label}>件名</Text>
+      <Dialog.Input
+        placeholder="ランチ"
+        style={styles.input}
+        wrapperStyle={styles.inputContainer}
+        value={subject}
+        onChangeText={(text) => setSubject(text)}
+      />
 
-        <View>
-          <Text style={styles.label}>立て替え日</Text>
-          <View style={styles.reimbursementDateContainer}>
-            <Text style={styles.reimbursementDateText}>2023/05/28</Text>
-          </View>
-        </View>
-      </View> */}
+      <Text style={styles.label}>金額</Text>
+      <Dialog.Input
+        placeholder="1980円"
+        style={styles.input}
+        wrapperStyle={styles.inputContainer}
+        value={amount}
+        onChangeText={(text) => setAmount(text)}
+      />
+      <TouchableOpacity style={styles.buttonContainer}>
+        <Text style={styles.buttonLabel}>割り勘</Text>
+      </TouchableOpacity>
 
       <View>
-        {/* <Button title="Open Dialog" onPress={showDialog} /> */}
-        <Dialog.Container
-          visible={dialogVisible}
-          contentStyle={styles.inner}
-        >
-          <Dialog.Title style={styles.title}>
-            支払ったものを
-            {'\n'}
-            入力してください
-          </Dialog.Title>
-
-          <Text style={styles.label}>立て替え者</Text>
-          <View style={styles.inputDoubleContainer}>
-            <View style={styles.inputDoubleBorder}>
-              <TouchableOpacity style={styles.inputDoubleItem}>
-                <Text style={styles.inputDoubleText}>川合真央</Text>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity style={styles.inputDoubleItem}>
-              <Text style={styles.inputDoubleText}>河原悠真</Text>
-            </TouchableOpacity>
-            {/* <Dialog.Input
-              wrapperStyle={styles.input}
-              value={selectedPerson}
-              onChangeText={(text) => setSelectedPerson(text)}
-            /> */}
-          </View>
-          <Text style={styles.label}>件名</Text>
-          <Dialog.Input
-            placeholder="ランチ"
-            style={styles.input}
-            wrapperStyle={styles.inputContainer}
-            value={subject}
-            onChangeText={(text) => setSubject(text)}
-          />
-
-          <Text style={styles.label}>金額</Text>
-          <Dialog.Input
-            placeholder="1980円"
-            style={styles.input}
-            wrapperStyle={styles.inputContainer}
-            value={amount}
-            onChangeText={(text) => setAmount(text)}
-          />
-          <TouchableOpacity style={styles.buttonContainer}>
-            <Text style={styles.buttonLabel}>割り勘</Text>
-          </TouchableOpacity>
-
-          <View>
-            <Text style={styles.label}>立て替え日</Text>
-            <View style={styles.reimbursementDateContainer}>
-              <Text style={styles.reimbursementDateText}>2023/05/28</Text>
-            </View>
-          </View>
-          <Dialog.Button label="キャンセル" onPress={handleCancel} />
-          <Dialog.Button label="OK" onPress={handleOK} />
-        </Dialog.Container>
+        <Text style={styles.label}>立て替え日</Text>
+        <View style={styles.reimbursementDateContainer}>
+          <Text style={styles.reimbursementDateText}>2023/05/28</Text>
+        </View>
       </View>
-    </View>
-
+      <Dialog.Button label="キャンセル" onPress={handleCancel} />
+      <Dialog.Button label="OK" onPress={handleOK} />
+    </Dialog.Container>
   );
 }
 

@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View, StyleSheet, Text, TextInput, TouchableOpacity
 } from 'react-native';
 
-import MemoList from '../components/MemoList';
 import CircleButton from '../components/CircleButton';
+import ReimbursementCreateScreen from "./ReimbursementCreateScreen";
 
 export default function HomeScreen(proprs) {
   const { navigation } = proprs;
+
+  // ダイアログ用
+  const [dialogVisible, setDialogVisible] = useState(false);
+
+  const showDialog = () => {
+    setDialogVisible(true);
+  };
+  const handleCloseDialog = () => {
+    setDialogVisible(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -37,7 +47,11 @@ export default function HomeScreen(proprs) {
       {/* 追加ボタン */}
       <CircleButton
         name="plus"
-        onPress={() => navigation.navigate('ReimbursementCreate')}
+        onPress={showDialog}
+      />
+      <ReimbursementCreateScreen
+        visible={dialogVisible}
+        onClose={handleCloseDialog}
       />
     </View>
   );

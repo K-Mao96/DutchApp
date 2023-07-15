@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import {
-  View, Text, TextInput, StyleSheet, TouchableOpacity, Button,
+  View, Text, TextInput, StyleSheet, TouchableOpacity, Alert,
 } from 'react-native';
 
 import Dialog from "react-native-dialog";
-
-// import Button from "../components/Button";
 
 export default function ReimbursementCreateScreen({ visible, onClose }) {
   const [selectedPerson, setSelectedPerson] = useState('');
   const [subject, setSubject] = useState('');
   const [amount, setAmount] = useState('');
+  const [isSelectedPersonA, setIsSelectedPersonA] = useState(false);
+  const [isSelectedPersonB, setIsSelectedPersonB] = useState(false);
+
+  // 当日の日付を取得する
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const formattedDate = `${year}/${month}/${day}`;
 
   const handleOK = () => {
     // OKボタンが押されたときの処理
@@ -25,6 +32,30 @@ export default function ReimbursementCreateScreen({ visible, onClose }) {
     onClose();
   };
 
+  const onPressPersonA = () => {
+    setIsSelectedPersonA(!isSelectedPersonA);
+    setIsSelectedPersonB(isSelectedPersonA);
+    setSelectedPerson('川合真央');
+  };
+  const onPressPerson = () => {
+    setIsSelectedPersonB(!isSelectedPersonB);
+    setIsSelectedPersonA(isSelectedPersonB);
+    setSelectedPerson('河原悠真');
+  };
+
+  const calcSplitAmount = () => {
+    if (amount !== '') {
+      const splitAmount = (parseFloat(amount) / 2).toFixed();
+      setAmount(splitAmount);
+    }
+  };
+
+  const inputPersonStyleA = isSelectedPersonA
+    ? styles.tappedInputDoubleItem : styles.inputDoubleItem;
+
+  const inputPersonStyleB = isSelectedPersonB
+    ? styles.tappedInputDoubleItem : styles.inputDoubleItem;
+
   return (
     <Dialog.Container
       visible={visible}
@@ -35,48 +66,60 @@ export default function ReimbursementCreateScreen({ visible, onClose }) {
         {'\n'}
         入力してください
       </Dialog.Title>
-
-      <Text style={styles.label}>立て替え者</Text>
-      <View style={styles.inputDoubleContainer}>
-        <View style={styles.inputDoubleBorder}>
-          <TouchableOpacity style={styles.inputDoubleItem}>
+      <View style={styles.section}>
+        <Text style={styles.label}>立て替え者</Text>
+        <View>
+          <TouchableOpacity
+            style={[styles.inputDoubleItem, styles.inputDoubleItemTop, inputPersonStyleA]}
+            onPress={onPressPersonA}
+          >
             <Text style={styles.inputDoubleText}>川合真央</Text>
           </TouchableOpacity>
+          <View style={styles.InputDoubleBorder} />
+          <TouchableOpacity
+            style={[styles.inputDoubleItem, styles.inputDoubleItemBottom, inputPersonStyleB]}
+            onPress={onPressPerson}
+          >
+            <Text style={styles.inputDoubleText}>河原悠真</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.inputDoubleItem}>
-          <Text style={styles.inputDoubleText}>河原悠真</Text>
-        </TouchableOpacity>
-        {/* <Dialog.Input
-          wrapperStyle={styles.input}
-          value={selectedPerson}
-          onChangeText={(text) => setSelectedPerson(text)}
-        /> */}
       </View>
-      <Text style={styles.label}>件名</Text>
-      <Dialog.Input
-        placeholder="ランチ"
-        style={styles.input}
-        wrapperStyle={styles.inputContainer}
-        value={subject}
-        onChangeText={(text) => setSubject(text)}
-      />
+      <View style={styles.section}>
+        <Text style={styles.label}>件名</Text>
+        <Dialog.Input
+          placeholder="ランチ"
+          style={styles.input}
+          wrapperStyle={styles.inputContainer}
+          value={subject}
+          onChangeText={(text) => setSubject(text)}
+        />
+      </View>
 
-      <Text style={styles.label}>金額</Text>
-      <Dialog.Input
-        placeholder="1980円"
-        style={styles.input}
-        wrapperStyle={styles.inputContainer}
-        value={amount}
-        onChangeText={(text) => setAmount(text)}
-      />
-      <TouchableOpacity style={styles.buttonContainer}>
-        <Text style={styles.buttonLabel}>割り勘</Text>
-      </TouchableOpacity>
+      <View style={styles.section}>
+        <Text style={styles.label}>金額</Text>
+        <Dialog.Input
+          placeholder="1980円"
+          style={styles.input}
+          wrapperStyle={styles.inputContainer}
+          value={amount}
+          onChangeText={(text) => setAmount(text)}
+        />
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Text
+            style={styles.buttonLabel}
+            onPress={calcSplitAmount}
+          >
+            割り勘
+          </Text>
+        </TouchableOpacity>
+      </View>
 
-      <View>
+      <View style={styles.section}>
         <Text style={styles.label}>立て替え日</Text>
         <View style={styles.reimbursementDateContainer}>
-          <Text style={styles.reimbursementDateText}>2023/05/28</Text>
+          <Text style={styles.reimbursementDateText}>
+            {formattedDate}
+          </Text>
         </View>
       </View>
       <Dialog.Button label="キャンセル" onPress={handleCancel} />
@@ -91,13 +134,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D9',
   },
   inner: {
-    paddingHorizontal: 17,
     paddingTop: 16,
     width: 306,
     backgroundColor: '#F3F1F1',
     borderRadius: '10px',
     alignSelf: 'center',
     marginTop: 50,
+  },
+  section: {
+    marginHorizontal: 17,
   },
   title: {
     fontSize: '20px',
@@ -108,23 +153,33 @@ const styles = StyleSheet.create({
     fontSize: '18px',
     marginBottom: 10,
   },
-  inputDoubleContainer: {
-    paddingHorizontal: 10,
-    backgroundColor: '#fff',
-    borderRadius: '10px',
-    marginBottom: 20,
-  },
   inputDoubleItem: {
     height: 52,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff',
+  },
+  inputDoubleItemTop: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  InputDoubleBorder: {
+    borderBottomColor: '#BCBABA',
+    borderBottomWidth: 1,
+    width: '90%',
+    alignSelf: 'center',
+  },
+  inputDoubleItemBottom: {
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    marginBottom: 17,
+  },
+  tappedInputDoubleItem: {
+    backgroundColor: 'lightblue',
   },
   inputDoubleText: {
     fontSize: '18px',
     textAlign: 'center',
     lineHeight: 52,
-  },
-  inputDoubleBorder: {
-    borderBottomColor: '#BCBABA',
-    borderBottomWidth: 1,
   },
   inputContainer: {
     backgroundColor: '#fff',

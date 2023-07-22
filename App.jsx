@@ -14,6 +14,9 @@ import SignUpScreen from './src/screens/SignUpScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import ReimbursementListScreen from './src/screens/ReimbursementListScreen';
 import ReimbursementCreateScreen from './src/screens/ReimbursementCreateScreen';
+import SettingScreen from './src/screens/SettingScreen';
+import OthersSettingScreen from './src/screens/OthersSettingScreen';
+
 
 const Stack = createStackNavigator();
 
@@ -21,7 +24,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="ReimbursementList"
+        initialRouteName="OthersSetting"
         screenOptions={{
           headerStyle: { backgroundColor: '#467fd3' },
           headerTitleStyle: { color: '#fff' },
@@ -56,6 +59,8 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="ReimbursementList" component={ReimbursementListScreen} />
         <Stack.Screen name="ReimbursementCreate" component={ReimbursementCreateScreen} />
+        <Stack.Screen name="Setting" component={SettingScreen} />
+        <Stack.Screen name="OthersSetting" component={OthersSettingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View, Text, StyleSheet, TouchableHighlight,
 } from 'react-native';
 
+import DeleteDialog from '../components/DeleteDialog';
+
 export default function SettingScreen(props) {
   const { navigation } = props;
+
+  // ダイアログ用
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const showDialog = () => {
+    setDialogVisible(true);
+  };
+  const handleCloseDialog = () => {
+    setDialogVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       {/* ログアウト機能 */}
@@ -16,9 +28,19 @@ export default function SettingScreen(props) {
       {/* アカウント削除機能 */}
       <View style={styles.settingContainer}>
         <View style={styles.settingItem}>
-          <Text style={[styles.settingItemText, styles.settingDelete]}>アカウントとデータを削除する</Text>
+          <Text
+            style={[styles.settingItemText, styles.settingDelete]}
+            onPress={showDialog}
+          >
+            アカウントとデータを削除する
+          </Text>
         </View>
       </View>
+
+      <DeleteDialog
+        visible={dialogVisible}
+        onClose={handleCloseDialog}
+      />
       {/* 戻る機能 */}
       <View style={styles.settingContainer}>
         <View style={styles.settingItem}>

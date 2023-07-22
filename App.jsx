@@ -16,7 +16,7 @@ import ReimbursementListScreen from './src/screens/ReimbursementListScreen';
 import ReimbursementCreateScreen from './src/screens/ReimbursementCreateScreen';
 import SettingScreen from './src/screens/SettingScreen';
 import OthersSettingScreen from './src/screens/OthersSettingScreen';
-
+import DeleteDialog from './src/components/DeleteDialog';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +61,7 @@ export default function App() {
         <Stack.Screen name="ReimbursementCreate" component={ReimbursementCreateScreen} />
         <Stack.Screen name="Setting" component={SettingScreen} />
         <Stack.Screen name="OthersSetting" component={OthersSettingScreen} />
+        <Stack.Screen name="DeleteDialog" component={DeleteDialog} />
       </Stack.Navigator>
     </NavigationContainer>
   );

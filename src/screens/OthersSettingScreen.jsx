@@ -5,7 +5,7 @@ import {
 
 import DeleteDialog from '../components/DeleteDialog';
 
-export default function SettingScreen(props) {
+export default function OthersSettingScreen(props) {
   const { navigation } = props;
 
   // ダイアログ用

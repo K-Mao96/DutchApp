@@ -18,6 +18,7 @@ import SettingScreen from './src/screens/SettingScreen';
 import OthersSettingScreen from './src/screens/OthersSettingScreen';
 import DeleteDialog from './src/components/DeleteDialog';
 import AccountCreateScreen from './src/screens/AccountCreateScreen';
+import WalletCreateScreen from './src/screens/WalletCreateScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="AccountCreate"
+        initialRouteName="WalletCreate"
         screenOptions={{
           headerStyle: { backgroundColor: '#467fd3' },
           headerTitleStyle: { color: '#fff' },
@@ -64,6 +65,7 @@ export default function App() {
         <Stack.Screen name="OthersSetting" component={OthersSettingScreen} />
         <Stack.Screen name="DeleteDialog" component={DeleteDialog} />
         <Stack.Screen name="AccountCreate" component={AccountCreateScreen} />
+        <Stack.Screen name="WalletCreate" component={WalletCreateScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

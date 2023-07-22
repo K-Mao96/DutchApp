@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     alignSelf: 'center',
-    verticalAlign: 'bottom',
     position: 'absolute',
     bottom: 30,
   },

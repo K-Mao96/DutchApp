@@ -10,23 +10,13 @@ import MemoCreateScreen from './src/screens/MemoCreateScreen';
 import LogInScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 
-// 割り勘アプリ
-import HomeScreen from './src/screens/HomeScreen';
-import ReimbursementListScreen from './src/screens/ReimbursementListScreen';
-import ReimbursementCreateScreen from './src/screens/ReimbursementCreateScreen';
-import SettingScreen from './src/screens/SettingScreen';
-import OthersSettingScreen from './src/screens/OthersSettingScreen';
-import DeleteDialog from './src/components/DeleteDialog';
-import AccountCreateScreen from './src/screens/AccountCreateScreen';
-import WalletCreateScreen from './src/screens/WalletCreateScreen';
-
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="WalletCreate"
+        initialRouteName="SignUp"
         screenOptions={{
           headerStyle: { backgroundColor: '#467fd3' },
           headerTitleStyle: { color: '#fff' },
@@ -56,17 +46,8 @@ export default function App() {
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
           }}
         />
-
-        {/* 割り勘アプリ */}
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="ReimbursementList" component={ReimbursementListScreen} />
-        <Stack.Screen name="ReimbursementCreate" component={ReimbursementCreateScreen} />
-        <Stack.Screen name="Setting" component={SettingScreen} />
-        <Stack.Screen name="OthersSetting" component={OthersSettingScreen} />
-        <Stack.Screen name="DeleteDialog" component={DeleteDialog} />
-        <Stack.Screen name="AccountCreate" component={AccountCreateScreen} />
-        <Stack.Screen name="WalletCreate" component={WalletCreateScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+
   );
 }
